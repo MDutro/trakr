@@ -4,9 +4,14 @@ const server = {
   saved: Promise.resolve("[]"),
 };
 
-let idSerial = 1;
+export type Attribute = {
+  name: string;
+  type: string;
+  value: any;
+};
+
 export class Todo {
-  private id: number = idSerial++;
+  private attributes: Attribute[] = [];
   constructor(public title: string, public done: boolean) {}
   setTitle(newTitle: string) {
     this.title = newTitle;
