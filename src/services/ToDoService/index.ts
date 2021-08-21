@@ -1,8 +1,28 @@
-import { useState } from "react";
+const SERVER_ADDRESS = '//127.0.0.1:3001';
 
-const server = {
-  saved: Promise.resolve("[]"),
-};
+class ServerAPI {
+
+  static loadToDos(id: string) {
+    return fetch(
+      SERVER_ADDRESS + '/todos/' + id
+    )
+      .then(response => response.json() as Promise<Todo[]>)
+      .catch(() => Promise.resolve([]));
+  }
+
+  static saveToDos(id: string, todos: Todo[]){
+    fetch(
+      SERVER_ADDRESS + '/todos/' + id,
+      {
+        body: JSON.stringify({ todos }),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+  }
+}
 
 export type Attribute = {
   name: string;
@@ -11,8 +31,7 @@ export type Attribute = {
 };
 
 export class Todo {
-  private attributes: Attribute[] = [];
-  constructor(public title: string, public done: boolean) {}
+  constructor(public title: string, public done: boolean, public attributes: any[] = []) {}
   setTitle(newTitle: string) {
     this.title = newTitle;
   }
@@ -20,12 +39,7 @@ export class Todo {
     this.done = newDone;
   }
 
-  static saveTodos(todos: Todo[]) {
-    // send the ToDo[] to the server, in json
-    server.saved = Promise.resolve(JSON.stringify(todos));
-  }
+  static saveTodos = ServerAPI.saveToDos;
 
-  static loadTodos(): Promise<Todo[]> {
-    return server.saved.then(JSON.parse);
-  }
+  static loadTodos = ServerAPI.loadToDos;
 }

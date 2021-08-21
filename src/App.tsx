@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { Todo } from "./services/ToDoService";
 import { ToDoComponent } from "./components/ToDoComponent";
@@ -7,6 +6,7 @@ import { ToDoComponent } from "./components/ToDoComponent";
 function App() {
   const [todo, setTodo] = useState(new Todo("", false));
   const [todos, setTodos] = useState([] as Todo[]);
+  const [id, setId] = useState('');
 
   const onChangeHandler = (e: React.SyntheticEvent<HTMLInputElement>) => {
     switch (e.currentTarget.name) {
@@ -32,9 +32,23 @@ function App() {
   return (
     <article>
       <section>
-        <button onClick={() => Todo.saveTodos(todos)}>Save Todos</button>
+        <label>
+          Whose todos are these?
+          <input
+            type="text"
+            name="id"
+            onInput={e => setId(e.currentTarget.value)}
+          />
+        </label>
+        <br />
+        <button onClick={() => Todo.saveTodos(id, todos)}>Save Todos</button>
         <button
-          onClick={() => Todo.loadTodos().then((todos) => setTodos(todos))}
+          onClick={() =>
+            Todo.loadTodos(id)
+              .then((todos) => {
+                setTodos(todos.map(t => new Todo(t.title, t.done, t.attributes)))
+              })
+          }
         >
           Load Todos
         </button>
@@ -42,14 +56,16 @@ function App() {
       <section>
         <form onSubmit={onSubmitHandler}>
           <p>
-            <label>What do you want to do?</label>
-            <input
-              type="text"
-              name="title"
-              onChange={onChangeHandler}
-              value={todo.title}
-              required
-            ></input>
+            <label>
+              What do you want to do?
+              <input
+                type="text"
+                name="title"
+                onChange={onChangeHandler}
+                value={todo.title}
+                required
+              ></input>
+            </label>
           </p>
           <p>
             <label>
