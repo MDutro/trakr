@@ -56,19 +56,17 @@ function App() {
   ];
 
   return (
+    <div>
+      <div className="nav-bar">
+        <h1>Trakr</h1>
+        <p>Track your goals. Change your life.</p>
+      </div>
     <article>
-      <section>
-        <button onClick={() => Todo.saveTodos(todos)}>Save Todos</button>
-        <button
-          onClick={() => Todo.loadTodos().then((todos) => setTodos(todos))}
-        >
-          Load Todos
-        </button>
-      </section>
-      <section>
-        <form onSubmit={onSubmitHandler}>
-          <p>
-            <label>What do you want to do?</label>
+      <div className="top-half">
+      <section className="form-container">
+        <form className="form-style" onSubmit={onSubmitHandler}>
+          <p className="input-and-label">
+            <label>What is your goal?</label>
             <input
               type="text"
               name="title"
@@ -77,30 +75,21 @@ function App() {
               required
             ></input>
           </p>
-          <p>
+          <p className="input-and-label">
             <label>
-              <input
-                type="checkbox"
-                name="done"
-                onChange={onChangeHandler}
-                checked={todo.done}
-              ></input>
-              Is it already done?
+              Count
             </label>
-          </p>
-          <p>
-            <label>
-              <input
+            <input
                 type="number"
                 name="count"
                 onChange={onChangeHandler}
                 value={todo.count}
               ></input>
-              Count
-            </label>
           </p>
-          <p>
+          <p className="input-and-label">
             <label>
+              Frequency
+            </label>
             <select
               value={todo.frequency}
               onChange={onSelectHandler}
@@ -109,14 +98,30 @@ function App() {
                 <option value={option.value}>{option.label}</option>
               ))}
             </select>
-              Frequency
-            </label>
           </p>
-          <p>
-            <button type="submit">Add ToDo</button>
+          <p className="input-and-label">
+            <label>
+              Goal Achieved?
+            </label>
+            <input
+                type="checkbox"
+                name="done"
+                onChange={onChangeHandler}
+                checked={todo.done}
+              ></input>
+          </p>
+          <p className="button-bar">
+            <button type="submit">Add Goal</button>
+            <div className="save-load-btns">
+              <button onClick={() => Todo.saveTodos(todos)}>Save Goals</button>
+              <button onClick={() => Todo.loadTodos().then((todos) => setTodos(todos))}>
+                Load Goals
+              </button>
+            </div>
           </p>
         </form>
       </section>
+      </div>
       <section>
         <ol>
           {todos.map((t) => (
@@ -133,6 +138,7 @@ function App() {
         </ol>
       </section>
     </article>
+    </div>
   );
 }
 
