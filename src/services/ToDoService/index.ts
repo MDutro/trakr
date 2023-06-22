@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const server = {
   saved: Promise.resolve("[]"),
 };
@@ -10,14 +8,28 @@ export type Attribute = {
   value: any;
 };
 
+export enum Time {
+  day = "day", 
+  week = "week",
+  month= "month"
+}
+
 export class Todo {
   private attributes: Attribute[] = [];
-  constructor(public title: string, public done: boolean) {}
+  constructor(public title: string, public done: boolean = false, public count: number = 0, public frequency: Time = Time.day ) {}
   setTitle(newTitle: string) {
     this.title = newTitle;
   }
   setDone(newDone: boolean) {
     this.done = newDone;
+  }
+
+  setCount(newCount: number) {
+    this.count = newCount;
+  }
+
+  setFrequency(newFrequency: Time) {
+    this.frequency = newFrequency
   }
 
   static saveTodos(todos: Todo[]) {

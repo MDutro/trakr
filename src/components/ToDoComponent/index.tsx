@@ -13,6 +13,8 @@ export const ToDoComponent = ({
     <li>
       <p>Title: {todo.title}</p>
       <p>Done: {String(todo.done)}</p>
+      <p>Count: {todo.count}</p>
+      <p>Frequency: {todo.frequency}</p>
       {!todo.done ? (
         <button onClick={doneButtonOnClick}>Mark Done</button>
       ) : (
