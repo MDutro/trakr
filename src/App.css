@@ -79,7 +79,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   width: 6rem;
   background-color: #79addb;
   color: black;
-  border-radius: 6px;
+  border: none;
+  border-radius: 8px;
+  border-color: #79addb;
 }
 
 .save-load-btns {

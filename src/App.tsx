@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Time, Todo } from "./services/ToDoService";
 import { ToDoComponent } from "./components/ToDoComponent";
@@ -132,7 +132,7 @@ function App() {
                 t.setDone(!t.done);
                 setTodo(new Todo(todo.title, todo.done, todo.count, todo.frequency));
               }}
-              removeOnClick={() => setTodos(todos.filter((todo) => todo != t))}
+              removeOnClick={() => setTodos(todos.filter((todo) => todo !== t))}
             />
           ))}
         </ol>
